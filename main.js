@@ -7,11 +7,8 @@ readMoreBtn.addEventListener("click", (e) => {
   text.classList.toggle("show-more");
   if (readMoreBtn.innerText === "Read More") {
     readMoreBtn.innerText = "Read Less";
-    if (readMoreBtn.innerText === "Read Less") {
-      readMoreBtn.innerText = "Read More";
-    }
   } else {
-    readMoreBtn.innerText = "Read Less";
+    readMoreBtn.innerText = "Read More";
   }
 });
 

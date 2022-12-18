@@ -3,3 +3,6 @@
 # API key file
 key.js
 
+# IDE 
+.idea
+
