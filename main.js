@@ -28,8 +28,15 @@ readMoreBtn.addEventListener("click", (e) => {
   }
 }*/
 
-//CARDS GRID
+const addEvents = () => {
+  const searchBar = document.getElementById("search-term");
+  let e = "";
+  searchBar.addEventListener("input", (event) => {
+    e = event.target.value;
+  });
+};
 
+//CARDS GRID
 const createCardContainer = (result) => {
   const myData = result.hits;
   const cardContainer = document.getElementById("cards-container");
