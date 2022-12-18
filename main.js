@@ -14,37 +14,26 @@ readMoreBtn.addEventListener("click", (e) => {
   }
 });
 
-/*function myFunction() {
-  const dots = document.getElementById("dots");
-  const moreText = document.getElementById("more");
-  const btnText = document.getElementById("myBtn");
-
-  if (dots.style.display === "none") {
-    dots.style.display = "inline";
-    btnText.innerText = "Read more";
-    moreText.style.display = "none";
-  } else {
-    dots.style.display = "none";
-    btnText.innerText = "Read less";
-    moreText.style.display = "inline";
-  }
-}*/
-
-
 // Handle search button click
 
 const getSearchResult = (term) => {
-    const url = `${baseURL}&q=${term}`;
-    getData(url);
-}
+  const url = `${baseURL}&q=${term}`;
+  getData(url);
+};
 
 const addEvents = () => {
   const submitSearchButton = document.getElementById("submit-search");
   let e = "";
-  submitSearchButton.addEventListener("click", (event) => {
-    const searchInput = document.getElementById("search-term");
-    const  e  = searchInput.value;
+  const searchInput = document.getElementById("search-term");
+  submitSearchButton.addEventListener("click", () => {
+    const e = searchInput.value;
     getSearchResult(e);
+  });
+  searchInput.addEventListener("keyup", (event) => {
+    if (event.key === "Enter" && document.activeElement === searchInput) {
+      const e = searchInput.value;
+      getSearchResult(e);
+    }
   });
 };
 
@@ -83,7 +72,6 @@ const getData = (url) => {
     })
     .catch((error) => console.error(error));
 };
-
 
 getData();
 // create an addEvents function to add the eventListener to your buttons
