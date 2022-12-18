@@ -1,4 +1,6 @@
-//READ MORE AND READ LESS BOTTON
+const baseURL = `https://pixabay.com/api/?key=${key}&image_type=`;
+
+//READ MORE and READ LESS Button
 // Verificar como adicionair o evento para os displays
 
 const readMoreBtn = document.querySelector(".read-more-btn");
@@ -28,13 +30,25 @@ readMoreBtn.addEventListener("click", (e) => {
   }
 }*/
 
+
+// Handle search button click
+
+const getSearchResult = (term) => {
+    const url = `${baseURL}&q=${term}`;
+    getData(url);
+}
+
 const addEvents = () => {
-  const searchBar = document.getElementById("search-term");
+  const submitSearchButton = document.getElementById("submit-search");
   let e = "";
-  searchBar.addEventListener("input", (event) => {
-    e = event.target.value;
+  submitSearchButton.addEventListener("click", (event) => {
+    const searchInput = document.getElementById("search-term");
+    const  e  = searchInput.value;
+    getSearchResult(e);
   });
 };
+
+addEvents();
 
 //CARDS GRID
 const createCardContainer = (result) => {
@@ -70,13 +84,6 @@ const getData = (url) => {
     .catch((error) => console.error(error));
 };
 
-const baseURL = `https://pixabay.com/api/?key=${key}&image_type=`;
-
-const getSearchResult = () => {
-  let e = document.getElementById("inputGroupSelect04");
-
-  getData(baseURL + e.value);
-};
 
 getData();
 // create an addEvents function to add the eventListener to your buttons
