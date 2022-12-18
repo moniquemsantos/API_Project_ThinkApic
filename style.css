@@ -1,0 +1,66 @@
+#more {
+  display: none;
+}
+
+.hero {
+  background-image: url("images/backgroundImage.png");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-color: rgb(237, 238, 242);
+  width: 100%;
+  height: 100vh;
+  max-height: 400px;
+  margin-bottom: 1.125rem;
+}
+
+@media (max-width: 912px) {
+  .hero {
+    background-size: unset;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 601px) {
+  .hero {
+    max-height: 266px;
+  }
+}
+
+.remove-padding {
+  padding: 0;
+}
+
+.moreText {
+  display: none;
+}
+
+.text.show-more .moreText {
+  display: inline;
+}
+.text.show-more .dots {
+  display: none;
+}
+
+.card {
+  border: none;
+  padding-bottom: 2em;
+  height: 176px;
+  margin-bottom: 1.5rem;
+  overflow-y: hidden;
+}
+
+.img-thumb {
+  width: 336px;
+}
+
+.footer {
+  color: white;
+  background-color: black;
+  width: 100%;
+  height: 3.5rem;
+  text-align: center;
+  margin-top: 15px;
+}
+.footer p {
+  position: relative;
+  padding-top: 1rem;
+}
