@@ -1,4 +1,5 @@
 const baseURL = `https://pixabay.com/api/?key=${key}&image_type=`;
+let filterType = "all";
 
 //READ MORE and READ LESS Button
 // Verificar como adicionair o evento para os displays
@@ -14,21 +15,33 @@ readMoreBtn.addEventListener("click", (e) => {
   }
 });
 
+/// SEARCH FUNCTIONALITY
+
+function getBaseURL() {
+  let url = baseURL;
+  if (filterType) {
+    url+=filterType;
+  }
+  return url;
+}
+
 // Handle search button click
 
 const getSearchResult = (term) => {
-  const url = `${baseURL}&q=${term}`;
+  const url = `${(getBaseURL())}&q=${term}`;
   getData(url);
 };
 
-const addEvents = () => {
+const addSearchSubmissionEvents = () => {
   const submitSearchButton = document.getElementById("submit-search");
   let e = "";
   const searchInput = document.getElementById("search-term");
+
   submitSearchButton.addEventListener("click", () => {
     const e = searchInput.value;
     getSearchResult(e);
   });
+
   searchInput.addEventListener("keyup", (event) => {
     if (event.key === "Enter" && document.activeElement === searchInput) {
       const e = searchInput.value;
@@ -37,7 +50,34 @@ const addEvents = () => {
   });
 };
 
-addEvents();
+addSearchSubmissionEvents();
+
+// Handle Filter selection
+
+const addFilter = (filter) => {
+  filterType = filter;
+}
+
+const addFilterSelectEvent = () => {
+  const filtersOptions = document.querySelectorAll(".dropdown-item");
+
+  // The querySelectorAll returns a NodeList, which is not an array.
+  // So we need to use the forEach method from the Array prototype.
+  // https://developer.mozilla.org/en-US/docs/Web/API/NodeList
+  filtersOptions.forEach((filterSelect) => {
+    filterSelect.addEventListener("click", (event) => {
+      // Here I'm selecting the dropdown menu button, to update the text
+      const selectBtn = document.querySelector("#filterDropdownSelectBtn");
+      selectBtn.innerText = event.target.innerText;
+
+      // Here I'm calling the function to update the filterType variable
+      filterType = event.target.innerText.toLowerCase();
+      addFilter(filterType)
+    });
+  });
+};
+
+addFilterSelectEvent();
 
 //CARDS GRID
 const createCardContainer = (result) => {
@@ -74,4 +114,4 @@ const getData = (url) => {
 };
 
 getData();
-// create an addEvents function to add the eventListener to your buttons
+// create an addSearchSubmissionEvents function to add the eventListener to your buttons
