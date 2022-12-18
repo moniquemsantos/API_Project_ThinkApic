@@ -10,7 +10,14 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
     <link rel="stylesheet" type="text/css" href="style.css" />
+
     <title>Think a Pic</title>
   </head>
   <body>
@@ -73,64 +80,41 @@
                 <div class="row">
                   <div class="col-xs-8 col-xs-offset-2">
                     <div class="input-group">
-                      <div class="input-group-btn search-panel">
+                      <div class="dropdown">
                         <button
+                          class="btn btn-warning dropdown-toggle"
                           type="button"
-                          class="btn btn-default dropdown-toggle"
-                          data-toggle="dropdown"
+                          id="filterDropdownSelectBtn"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
                         >
-                          <span id="search_concept">Filter by</span>
-                          <span class="caret"></span>
+                          Filter by
                         </button>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#contains">Contains</a></li>
-                          <li><a href="#its_equal">It's equal</a></li>
-                          <li><a href="#greather_than">Greather than ></a></li>
-                          <li><a href="#less_than">Less than</a></li>
-                          <li class="divider"></li>
-                          <li><a href="#all">Anything</a></li>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">All</a></li>
+                          <li><a class="dropdown-item" href="#">Photo</a></li>
+                          <li><a class="dropdown-item" href="#">Illustration</a></li>
+                          <li><a class="dropdown-item" href="#">Vector</a></li>
                         </ul>
                       </div>
                       <input
-                        type="hidden"
-                        name="search_param"
-                        value="all"
-                        id="search_param"
-                      />
-                      <input
                         type="text"
                         class="form-control"
+                        id="search-term"
                         name="x"
                         placeholder="Search term..."
                       />
-                      <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">
-                          <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                      </span>
+                      <button
+                        id="submit-search"
+                        type="button"
+                        class="btn btn-dark"
+                      >
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <!-- <div class="input-group">
-                <select
-                  class="form-select"
-                  id="inputGroupSelect04"
-                  aria-label="Example select with button addon"
-                >
-                  <option value="all">All</option>
-                  <option value="photo">Photos</option>
-                  <option value="illustration">Illustrations</option>
-                </select>
-                <button
-                  onClick="getSearchResult()"
-                  class="btn btn-warning"
-                  type="button"
-                >
-                  Button
-                </button>
-              </div>-->
             </div>
           </div>
         </div>
@@ -140,13 +124,9 @@
     <div class="container">
       <div class="row" id="cards-container"></div>
     </div>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Launch demo modal
-    </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="img-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -154,11 +134,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            ...
+            <img src="" alt="" id="img-preview">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <a role="button" href="" target="_blank" id="image-download-btn" type="button" class="btn btn-primary" >Download</a>
           </div>
         </div>
       </div>
