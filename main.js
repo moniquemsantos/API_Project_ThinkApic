@@ -92,13 +92,14 @@ const createCardContainer = (result) => {
     img.setAttribute("class", ".img-thumb");
     img.setAttribute("data-bs-toggle", "modal");
     img.setAttribute("data-bs-target", "#img-modal");
+    img.setAttribute("data-tagImg", myData[i].tags);
+    img.setAttribute("data-likes", myData[i].likes);
     img.setAttribute("data-download-url", myData[i].largeImageURL);
     const divCard = document.createElement("div");
     divCard.setAttribute("class", "col-6 col-sm-12 col-md-6 col-lg-3");
     divCard.classList.add("card");
     divCard.id = myData[i].id;
     divCard.appendChild(img);
-
     cardContainer.appendChild(divCard);
   }
 };
@@ -112,10 +113,6 @@ modal.addEventListener("show.bs.modal", (event) => {
   downloadBtn.href = img.dataset.downloadUrl;
   modalImg.src = img.src;
 });
-
-const myTags = document.getElementById("myModalTags");
-const myModalTags = document.createElement("div");
-myModalTags.className = "tags";
 
 function getData(url) {
   if (!url) {
