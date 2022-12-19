@@ -40,6 +40,10 @@
   display: none;
 }
 
+.addTopPadding {
+  padding-top: 25px;
+}
+
 .card {
   border: none;
   padding-bottom: 2em;
