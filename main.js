@@ -2,7 +2,6 @@ const baseURL = `https://pixabay.com/api/?key=${key}&image_type=`;
 let filterType = "all";
 
 //READ MORE and READ LESS Button
-// Verificar como adicionair o evento para os displays
 
 const readMoreBtn = document.querySelector(".read-more-btn");
 const text = document.querySelector(".text");
@@ -20,7 +19,7 @@ readMoreBtn.addEventListener("click", (e) => {
 function getBaseURL() {
   let url = baseURL;
   if (filterType) {
-    url+=filterType;
+    url += filterType;
   }
   return url;
 }
@@ -28,7 +27,7 @@ function getBaseURL() {
 // Handle search button click
 
 const getSearchResult = (term) => {
-  const url = `${(getBaseURL())}&q=${term}`;
+  const url = `${getBaseURL()}&q=${term}`;
   getData(url);
 };
 
@@ -56,7 +55,7 @@ addSearchSubmissionEvents();
 
 const addFilter = (filter) => {
   filterType = filter;
-}
+};
 
 const addFilterSelectEvent = () => {
   const filtersOptions = document.querySelectorAll(".dropdown-item");
@@ -72,7 +71,7 @@ const addFilterSelectEvent = () => {
 
       // Here I'm calling the function to update the filterType variable
       filterType = event.target.innerText.toLowerCase();
-      addFilter(filterType)
+      addFilter(filterType);
     });
   });
 };
@@ -107,14 +106,18 @@ const createCardContainer = (result) => {
 //MODAL
 const modal = document.getElementById("img-modal");
 modal.addEventListener("show.bs.modal", (event) => {
-    const img = event.relatedTarget;
-    const modalImg = document.getElementById("img-preview");
-    const downloadBtn = document.getElementById("image-download-btn");
-    downloadBtn.href = img.dataset.downloadUrl;
-    modalImg.src = img.src;
+  const img = event.relatedTarget;
+  const modalImg = document.getElementById("img-preview");
+  const downloadBtn = document.getElementById("image-download-btn");
+  downloadBtn.href = img.dataset.downloadUrl;
+  modalImg.src = img.src;
 });
 
-const getData = (url) => {
+const myTags = document.getElementById("myModalTags");
+const myModalTags = document.createElement("div");
+myModalTags.className = "tags";
+
+function getData(url) {
   if (!url) {
     url = `https://pixabay.com/api/?key=${key}&image_type=`;
   }
@@ -125,7 +128,6 @@ const getData = (url) => {
       createCardContainer(result);
     })
     .catch((error) => console.error(error));
-};
+}
 
 getData();
-// create an addSearchSubmissionEvents function to add the eventListener to your buttons
