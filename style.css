@@ -52,6 +52,10 @@
   width: 336px;
 }
 
+.fullImgWidth {
+  width: 100%;
+}
+
 .footer {
   color: white;
   background-color: black;

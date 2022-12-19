@@ -2,7 +2,6 @@ const baseURL = `https://pixabay.com/api/?key=${key}&image_type=`;
 let filterType = "all";
 
 //READ MORE and READ LESS Button
-// Verificar como adicionair o evento para os displays
 
 const readMoreBtn = document.querySelector(".read-more-btn");
 const text = document.querySelector(".text");
@@ -20,7 +19,7 @@ readMoreBtn.addEventListener("click", (e) => {
 function getBaseURL() {
   let url = baseURL;
   if (filterType) {
-    url+=filterType;
+    url += filterType;
   }
   return url;
 }
@@ -28,7 +27,7 @@ function getBaseURL() {
 // Handle search button click
 
 const getSearchResult = (term) => {
-  const url = `${(getBaseURL())}&q=${term}`;
+  const url = `${getBaseURL()}&q=${term}`;
   getData(url);
 };
 
@@ -56,7 +55,7 @@ addSearchSubmissionEvents();
 
 const addFilter = (filter) => {
   filterType = filter;
-}
+};
 
 const addFilterSelectEvent = () => {
   const filtersOptions = document.querySelectorAll(".dropdown-item");
@@ -72,7 +71,7 @@ const addFilterSelectEvent = () => {
 
       // Here I'm calling the function to update the filterType variable
       filterType = event.target.innerText.toLowerCase();
-      addFilter(filterType)
+      addFilter(filterType);
     });
   });
 };
@@ -91,16 +90,31 @@ const createCardContainer = (result) => {
     img.src = src;
     img.alt = "picture";
     img.setAttribute("class", ".img-thumb");
+    img.setAttribute("data-bs-toggle", "modal");
+    img.setAttribute("data-bs-target", "#img-modal");
+    img.setAttribute("data-tagImg", myData[i].tags);
+    img.setAttribute("data-likes", myData[i].likes);
+    img.setAttribute("data-download-url", myData[i].largeImageURL);
     const divCard = document.createElement("div");
     divCard.setAttribute("class", "col-6 col-sm-12 col-md-6 col-lg-3");
     divCard.classList.add("card");
+    divCard.id = myData[i].id;
     divCard.appendChild(img);
-
     cardContainer.appendChild(divCard);
   }
 };
 
-const getData = (url) => {
+//MODAL
+const modal = document.getElementById("img-modal");
+modal.addEventListener("show.bs.modal", (event) => {
+  const img = event.relatedTarget;
+  const modalImg = document.getElementById("img-preview");
+  const downloadBtn = document.getElementById("image-download-btn");
+  downloadBtn.href = img.dataset.downloadUrl;
+  modalImg.src = img.src;
+});
+
+function getData(url) {
   if (!url) {
     url = `https://pixabay.com/api/?key=${key}&image_type=`;
   }
@@ -111,7 +125,6 @@ const getData = (url) => {
       createCardContainer(result);
     })
     .catch((error) => console.error(error));
-};
+}
 
 getData();
-// create an addSearchSubmissionEvents function to add the eventListener to your buttons

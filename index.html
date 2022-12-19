@@ -93,7 +93,9 @@
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="#">All</a></li>
                           <li><a class="dropdown-item" href="#">Photo</a></li>
-                          <li><a class="dropdown-item" href="#">Illustration</a></li>
+                          <li>
+                            <a class="dropdown-item" href="#">Illustration</a>
+                          </li>
                           <li><a class="dropdown-item" href="#">Vector</a></li>
                         </ul>
                       </div>
@@ -124,10 +126,50 @@
     <div class="container">
       <div class="row" id="cards-container"></div>
     </div>
-    <div class="modal">
-      <img src="" alt="" />
-      <button>close modal</button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="img-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <img class="fullImgWidth" src="" alt="" id="img-preview" />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a
+              role="button"
+              href=""
+              target="_blank"
+              id="image-download-btn"
+              type="button"
+              class="btn btn-warning"
+              >Free Download</a
+            >
+          </div>
+        </div>
+      </div>
     </div>
+
     <footer class="footer">
       <p>© 2022 Think a pic</p>
     </footer>
