@@ -1,7 +1,12 @@
-const baseURL = `https://pixabay.com/api/?key=${key}&image_type=`;
-let filterType = "all";
+// Consts and data;
+const baseURL = `https://pixabay.com/api/?key=${key}`;
+let imageTypeFilter = "&image_type=all";
+let colorFilter = "";
+let colors = [];
+let data = [];
 
-//READ MORE and READ LESS Button
+
+//////////////// READ MORE and READ LESS Button
 
 const readMoreBtn = document.querySelector(".read-more-btn");
 const text = document.querySelector(".text");
@@ -14,18 +19,20 @@ readMoreBtn.addEventListener("click", (e) => {
   }
 });
 
-/// SEARCH FUNCTIONALITY
+/////////////// SEARCH FUNCTIONALITY
 
 function getBaseURL() {
   let url = baseURL;
-  if (filterType) {
-    url += filterType;
+  if (imageTypeFilter) {
+    url += imageTypeFilter;
+  }
+  if (colors.length > 0 && colorFilter) {
+    url += colorFilter;
   }
   return url;
 }
 
 // Handle search button click
-
 const getSearchResult = (term) => {
   const url = `${getBaseURL()}&q=${term}`;
   getData(url);
@@ -33,7 +40,6 @@ const getSearchResult = (term) => {
 
 const addSearchSubmissionEvents = () => {
   const submitSearchButton = document.getElementById("submit-search");
-  let e = "";
   const searchInput = document.getElementById("search-term");
 
   submitSearchButton.addEventListener("click", () => {
@@ -51,13 +57,21 @@ const addSearchSubmissionEvents = () => {
 
 addSearchSubmissionEvents();
 
-// Handle Filter selection
+///////////// HANDLE FILTER SELECTION
 
-const addFilter = (filter) => {
-  filterType = filter;
+
+const addFilter = (filterName, filter) => {
+  if (filterName === 'image_type') {
+    imageTypeFilter = `&image_type=${filter}`;
+  }
+  if (filterName === 'colors') {
+    colorFilter = `&colors=${filter}`;
+  }
 };
 
-const addFilterSelectEvent = () => {
+//// Image Type Filter
+
+const addImageTypeFilterSelectEvent = () => {
   const filtersOptions = document.querySelectorAll(".dropdown-item");
 
   // The querySelectorAll returns a NodeList, which is not an array.
@@ -69,16 +83,49 @@ const addFilterSelectEvent = () => {
       const selectBtn = document.querySelector("#filterDropdownSelectBtn");
       selectBtn.innerText = event.target.innerText;
 
-      // Here I'm calling the function to update the filterType variable
-      filterType = event.target.innerText.toLowerCase();
-      addFilter(filterType);
+      // Here I'm calling the function to update the imageTypeFilter variable
+      imageTypeFilter = event.target.innerText.toLowerCase();
+      addFilter('image_type', imageTypeFilter);
     });
   });
 };
 
-addFilterSelectEvent();
+addImageTypeFilterSelectEvent()
 
-//CARDS GRID
+//// Color Filter - Not working
+
+const addNewColor = (color) => {
+  if (!colors.includes(color)) {
+    colors.push(color);
+  }
+  addFilter('colors', colors.join(','));
+}
+
+const removeColor = (removedColor) => {
+  if (colors.includes(removedColor)) {
+    colors = colors.filter((color) => color !== removedColor);
+  }
+  addFilter('colors', colors.join(','));
+}
+
+const addColorFilterSelectEvent = () => {
+  const colorFiltersCheckBoxes = document.querySelectorAll('[data-filter="color"]');
+  colorFiltersCheckBoxes.forEach((colorFilterCheckBox) => {
+    colorFilterCheckBox.addEventListener("click", (event) => {
+      if (event.target.checked) {
+        addNewColor(event.target.value);
+      } else {
+        removeColor(event.target.value);
+      }
+    });
+  });
+}
+
+addColorFilterSelectEvent();
+
+
+/////////////// CARDS GRID
+
 const createCardContainer = (result) => {
   const myData = result.hits;
   const cardContainer = document.getElementById("cards-container");
@@ -103,7 +150,7 @@ const createCardContainer = (result) => {
   }
 };
 
-//MODAL
+///////////////////// MODAL
 const modal = document.getElementById("img-modal");
 modal.addEventListener("show.bs.modal", (event) => {
   const img = event.relatedTarget;
@@ -113,18 +160,21 @@ modal.addEventListener("show.bs.modal", (event) => {
   modalImg.src = img.src;
 });
 
+
+////////////////// GET DATA
+
 const getData = (url) => {
   if (!url) {
-    url = `https://pixabay.com/api/?key=${key}&image_type=`;
+    url = `https://pixabay.com/api/?key=${key}`;
   }
   fetch(url)
     .then((response) => response.json())
     .then((result) => {
       console.log("result", result);
+      data = [...result.hits];
       createCardContainer(result);
     })
     .catch((error) => console.error(error));
 };
 
 getData();
-// create an addSearchSubmissionEvents function to add the eventListener to your buttons
