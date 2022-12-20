@@ -3,7 +3,6 @@ const baseURL = `https://pixabay.com/api/?key=${key}`;
 let imageTypeFilter = "&image_type=all";
 let colorFilter = "";
 let colors = [];
-let data = [];
 
 //////////////// READ MORE and READ LESS Button
 
@@ -31,7 +30,7 @@ function getBaseURL() {
   return url;
 }
 
-// Handle search button click
+// Handle search button click (Search bar)
 const getSearchResult = (term) => {
   const url = `${getBaseURL()}&q=${term}`;
   getData(url);
