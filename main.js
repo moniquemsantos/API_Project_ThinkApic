@@ -58,12 +58,11 @@ addSearchSubmissionEvents();
 
 ///////////// HANDLE FILTER SELECTION
 
-
 const addFilter = (filterName, filter) => {
-  if (filterName === 'image_type') {
+  if (filterName === "image_type") {
     imageTypeFilter = `&image_type=${filter}`;
   }
-  if (filterName === 'colors') {
+  if (filterName === "colors") {
     colorFilter = `&colors=${filter}`;
   }
 };
@@ -84,31 +83,31 @@ const addImageTypeFilterSelectEvent = () => {
 
       // Here I'm calling the function to update the imageTypeFilter variable
       imageTypeFilter = event.target.innerText.toLowerCase();
-      addFilter('image_type', imageTypeFilter);
+      addFilter("image_type", imageTypeFilter);
     });
   });
 };
 
-addImageTypeFilterSelectEvent()
-
-//// Color Filter - Not working
+addImageTypeFilterSelectEvent();
 
 const addNewColor = (color) => {
   if (!colors.includes(color)) {
     colors.push(color);
   }
-  addFilter('colors', colors.join(','));
-}
+  addFilter("colors", colors.join(","));
+};
 
 const removeColor = (removedColor) => {
   if (colors.includes(removedColor)) {
     colors = colors.filter((color) => color !== removedColor);
   }
-  addFilter('colors', colors.join(','));
-}
+  addFilter("colors", colors.join(","));
+};
 
 const addColorFilterSelectEvent = () => {
-  const colorFiltersCheckBoxes = document.querySelectorAll('[data-filter="color"]');
+  const colorFiltersCheckBoxes = document.querySelectorAll(
+    '[data-filter="color"]'
+  );
   colorFiltersCheckBoxes.forEach((colorFilterCheckBox) => {
     colorFilterCheckBox.addEventListener("click", (event) => {
       if (event.target.checked) {
@@ -118,10 +117,9 @@ const addColorFilterSelectEvent = () => {
       }
     });
   });
-}
+};
 
 addColorFilterSelectEvent();
-
 
 /////////////// CARDS GRID
 
@@ -138,14 +136,21 @@ const createCardContainer = (result) => {
     img.setAttribute("class", ".img-thumb");
     img.setAttribute("data-bs-toggle", "modal");
     img.setAttribute("data-bs-target", "#img-modal");
-    img.setAttribute("data-tagImg", myData[i].tags);
     img.setAttribute("data-likes", myData[i].likes);
     img.setAttribute("data-download-url", myData[i].largeImageURL);
     const divCard = document.createElement("div");
+    const icon = document.createElement("i");
+    icon.className = "fa fa-heart";
+    icon.classList.add("iconStyle");
+    const likesText = document.createElement("span");
+    likesText.classList.add("likePosition");
     divCard.setAttribute("class", "col-6 col-sm-12 col-md-6 col-lg-3");
     divCard.classList.add("card");
     divCard.id = myData[i].id;
     divCard.appendChild(img);
+    likesText.appendChild(icon);
+    likesText.append(myData[i].likes);
+    divCard.appendChild(likesText);
     cardContainer.appendChild(divCard);
   }
 };
@@ -159,7 +164,6 @@ modal.addEventListener("show.bs.modal", (event) => {
   downloadBtn.href = img.dataset.downloadUrl;
   modalImg.src = img.src;
 });
-
 
 ////////////////// GET DATA
 
@@ -175,6 +179,6 @@ const getData = (url) => {
       createCardContainer(result);
     })
     .catch((error) => console.error(error));
-}
+};
 
 getData();
